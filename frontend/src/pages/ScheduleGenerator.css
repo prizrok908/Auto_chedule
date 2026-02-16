@@ -1,0 +1,623 @@
+/* Генератор расписания */
+
+.generator-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.generator-card {
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.class-selector-label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 15px;
+}
+
+.class-selector {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+}
+
+/* Информационный блок */
+.info-box-primary {
+  margin: 10px 0;
+  padding: 15px;
+  background: #e3f2fd;
+  border-radius: 8px;
+  border: 2px solid #2196f3;
+}
+
+.info-box-primary strong {
+  color: #1565c0;
+  font-size: 15px;
+}
+
+.info-box-primary p {
+  margin: 8px 0 0 0;
+  font-size: 14px;
+  color: #424242;
+  line-height: 1.5;
+}
+
+/* Блок готового расписания */
+.schedule-ready {
+  padding: 25px;
+  background: #d4edda;
+  border: 2px solid #28a745;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.schedule-ready h3 {
+  margin: 0 0 15px 0;
+  color: #155724;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.schedule-ready h3 span {
+  font-size: 32px;
+}
+
+.schedule-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.stat-box {
+  padding: 15px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #155724;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.view-schedule-link {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.view-schedule-link:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+/* Блок стандартной программы */
+.curriculum-box {
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 2px solid #2c3e50;
+}
+
+.curriculum-box h3 {
+  margin: 0 0 15px 0;
+  font-size: 20px;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.curriculum-box h3 span {
+  font-size: 24px;
+}
+
+.curriculum-info {
+  padding: 15px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.curriculum-info p {
+  margin: 0 0 10px 0;
+  color: #555;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.curriculum-info ul {
+  margin: 0;
+  padding-left: 25px;
+  color: #666;
+  line-height: 1.8;
+}
+
+.subjects-list {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.subjects-list strong {
+  font-size: 16px;
+  color: #333;
+}
+
+.subjects-grid {
+  margin-top: 15px;
+  display: grid;
+  gap: 10px;
+}
+
+.subject-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.subject-name {
+  font-size: 15px;
+  color: #333;
+}
+
+.subject-hours {
+  padding: 4px 12px;
+  background: #3498db;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Кнопки действий */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-generate {
+  flex: 1;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-generate:hover {
+  background: #229954;
+  transform: translateY(-2px);
+}
+
+.btn-generate:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-generate.warning {
+  background: #e67e22;
+}
+
+.btn-generate.warning:hover {
+  background: #d35400;
+}
+
+.btn-custom {
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  background: white;
+  color: #2c3e50;
+  border: 2px solid #2c3e50;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-custom:hover {
+  background: #2c3e50;
+  color: white;
+}
+
+/* Ручная настройка */
+.custom-setup {
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.custom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.custom-header h3 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.btn-back {
+  padding: 8px 16px;
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Форма предметов */
+.subjects-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.subject-form-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  align-items: center;
+}
+
+.subject-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.subject-info strong {
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.teacher-name {
+  font-size: 14px;
+  color: #666;
+}
+
+.lessons-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lessons-input {
+  width: 100px;
+  padding: 12px;
+  border: 2px solid #3498db;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.lessons-input:focus {
+  outline: none;
+  border-color: #2980b9;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.lessons-label {
+  font-size: 14px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.btn-remove-small {
+  padding: 8px 12px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.btn-remove-small:hover {
+  background: #c82333;
+}
+
+.subject-selects {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subject-select,
+.teacher-select {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+}
+
+.subject-select:focus,
+.teacher-select:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.btn-add-subject {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  background: #ecf0f1;
+  color: #2c3e50;
+  border: 2px dashed #95a5a6;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-add-subject:hover {
+  background: #bdc3c7;
+  border-color: #7f8c8d;
+}
+
+.schedule-item-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr auto;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.schedule-item-row select,
+.schedule-item-row input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.btn-remove {
+  padding: 10px 15px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-remove:hover {
+  background: #c82333;
+}
+
+/* Индикатор загрузки */
+.loading-indicator {
+  margin-top: 20px;
+  padding: 20px;
+  background: #fff3cd;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.loading-indicator p {
+  margin: 0;
+  font-size: 16px;
+  color: #856404;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .schedule-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .schedule-item-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+
+/* SemesterSchedule styles */
+.controls {
+  margin-bottom: 20px;
+}
+
+.class-selector-box {
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.class-selector-field {
+  flex: 1;
+}
+
+.class-selector-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.class-selector-dropdown {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  background: white;
+}
+
+.week-navigation {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.week-nav-button {
+  padding: 10px 20px;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.week-nav-button.disabled {
+  background: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.week-display {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  background: #2c3e50;
+  border-radius: 6px;
+  color: white;
+}
+
+.week-number {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.week-info {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+.warning-box {
+  padding: 20px;
+  background: #fff3cd;
+  border-radius: 4px;
+  border: 1px solid #ffc107;
+}
+
+.warning-text {
+  margin: 0;
+  color: #856404;
+  font-size: 16px;
+}
+
+.schedule-table-wrapper {
+  overflow-x: auto;
+}
+
+.lesson-number-header {
+  width: 80px;
+}
+
+.date-small {
+  font-weight: normal;
+  color: #666;
+}
+
+.lesson-number-cell {
+  text-align: center;
+  font-weight: bold;
+}
+
+.lesson-cell {
+  background: white;
+  position: relative;
+  padding: 10px;
+}
+
+.lesson-cell.substituted {
+  background: #fff3cd;
+}
+
+.lesson-subject {
+  font-weight: bold;
+  color: #333;
+}
+
+.lesson-teacher {
+  color: #666;
+}
+
+.lesson-teacher.substituted-teacher {
+  color: #856404;
+  font-weight: 600;
+}
+
+.lesson-classroom {
+  font-size: 12px;
+  color: #666;
+}
+
+.lesson-actions {
+  margin-top: 5px;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  font-size: 11px;
+  padding: 2px 6px;
+}
+
+.action-button.cancel-button {
+  background: #dc3545;
+}
