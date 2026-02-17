@@ -8,6 +8,30 @@
   background: #2c3e50;
   color: white;
   padding: 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+/* Красивый скроллбар для sidebar */
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #34495e;
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #5a6c7d;
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #7f8c8d;
 }
 
 .sidebar h2 {
@@ -54,6 +78,7 @@
 .main-content {
   flex: 1;
   background: #ecf0f1;
+  overflow-y: auto;
 }
 
 .content {
