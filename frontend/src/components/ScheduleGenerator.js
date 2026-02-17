@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import ru from 'date-fns/locale/ru';
+import 'react-datepicker/dist/react-datepicker.css';
 import '../pages/ScheduleGenerator.css';
+
+registerLocale('ru', ru);
 
 function ScheduleGenerator() {
   const [classes, setClasses] = useState([]);
@@ -13,6 +18,8 @@ function ScheduleGenerator() {
   const [scheduleItems, setScheduleItems] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
     fetchClasses();
@@ -134,9 +141,21 @@ function ScheduleGenerator() {
     console.log('scheduleItems:', scheduleItems);
     console.log('selectedClass:', selectedClass);
     console.log('scheduleExists:', scheduleExists);
+    console.log('startDate:', startDate);
+    console.log('endDate:', endDate);
     
     if (scheduleItems.length === 0) {
       alert('Добавьте хотя бы один предмет');
+      return;
+    }
+    
+    if (!startDate || !endDate) {
+      alert('Выберите даты начала и окончания периода');
+      return;
+    }
+    
+    if (startDate >= endDate) {
+      alert('Дата начала должна быть раньше даты окончания');
       return;
     }
 
@@ -157,13 +176,17 @@ function ScheduleGenerator() {
       console.log('Отправляем данные:', {
         class_id: parseInt(selectedClass),
         academic_period_id: 1,
-        custom_curriculum: curriculum
+        custom_curriculum: curriculum,
+        start_date: startDate.toISOString().split('T')[0],
+        end_date: endDate.toISOString().split('T')[0]
       });
 
       await axios.post('/api/schedule/generate-semester', {
         class_id: parseInt(selectedClass),
         academic_period_id: 1,
-        custom_curriculum: curriculum
+        custom_curriculum: curriculum,
+        start_date: startDate.toISOString().split('T')[0],
+        end_date: endDate.toISOString().split('T')[0]
       });
       
       alert('✅ Расписание успешно создано!');
@@ -423,13 +446,68 @@ function ScheduleGenerator() {
             </div>
 
             {scheduleItems.length > 0 && (
-              <button 
-                onClick={handleCustomGenerate} 
-                disabled={loading}
-                className="btn-generate"
-              >
-                {loading ? '⏳ Генерация...' : '🚀 Сгенерировать расписание'}
-              </button>
+              <>
+                <div className="date-range-section" style={{marginTop: '30px', marginBottom: '20px'}}>
+                  <h4 style={{marginBottom: '15px'}}>📅 Период генерации расписания</h4>
+                  <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px'}}>
+                    <div className="form-section">
+                      <label className="form-label-big">Дата начала</label>
+                      <DatePicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        selectsStart
+                        startDate={startDate}
+                        endDate={endDate}
+                        dateFormat="dd.MM.yyyy"
+                        placeholderText="Выберите дату начала"
+                        className="input-big date-picker-input"
+                        calendarClassName="custom-calendar"
+                        locale="ru"
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="scroll"
+                        minDate={new Date(new Date().getFullYear() - 2, 0, 1)}
+                        maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                        yearDropdownItemNumber={8}
+                      />
+                    </div>
+                    <div className="form-section">
+                      <label className="form-label-big">Дата окончания</label>
+                      <DatePicker
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
+                        dateFormat="dd.MM.yyyy"
+                        placeholderText="Выберите дату окончания"
+                        className="input-big date-picker-input"
+                        calendarClassName="custom-calendar"
+                        locale="ru"
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="scroll"
+                        maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                        yearDropdownItemNumber={8}
+                      />
+                    </div>
+                  </div>
+                  {startDate && endDate && (
+                    <p style={{marginTop: '10px', color: '#666', fontSize: '14px'}}>
+                      Будет создано расписание на период с {startDate.toLocaleDateString('ru-RU')} по {endDate.toLocaleDateString('ru-RU')}
+                    </p>
+                  )}
+                </div>
+                
+                <button 
+                  onClick={handleCustomGenerate} 
+                  disabled={loading}
+                  className="btn-generate"
+                >
+                  {loading ? '⏳ Генерация...' : '🚀 Сгенерировать расписание'}
+                </button>
+              </>
             )}
           </div>
         )}

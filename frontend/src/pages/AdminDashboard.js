@@ -5,7 +5,13 @@ import { useAuth } from '../context/AuthContext';
 import SemesterSchedule from './SemesterSchedule';
 import HolidaysManager from '../components/HolidaysManager';
 import ScheduleGenerator from '../components/ScheduleGenerator';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import ru from 'date-fns/locale/ru';
+import 'react-datepicker/dist/react-datepicker.css';
 import './Dashboard.css';
+import './ScheduleGenerator.css';
+
+registerLocale('ru', ru);
 
 function AdminDashboard() {
   const { logout } = useAuth();
@@ -355,11 +361,20 @@ function UserManagement() {
               {formData.role === 'student' && (
                 <div className="form-section">
                   <label className="form-label-big">Дата рождения</label>
-                  <input
-                    type="date"
-                    className="input-big"
-                    value={formData.birth_date}
-                    onChange={(e) => setFormData({...formData, birth_date: e.target.value})}
+                  <DatePicker
+                    selected={formData.birth_date ? new Date(formData.birth_date) : null}
+                    onChange={(date) => setFormData({...formData, birth_date: date ? date.toISOString().split('T')[0] : ''})}
+                    dateFormat="dd.MM.yyyy"
+                    placeholderText="Выберите дату рождения"
+                    className="input-big date-picker-input"
+                    calendarClassName="custom-calendar"
+                    locale="ru"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="scroll"
+                    minDate={new Date(new Date().getFullYear() - 20, 0, 1)}
+                    maxDate={new Date()}
+                    yearDropdownItemNumber={20}
                     required
                   />
                   <p className="help-text-big" style={{fontSize: '14px', color: '#666', marginTop: '8px'}}>
@@ -1492,11 +1507,20 @@ function HolidaysManagerPage() {
                     <div className="date-inputs-row">
                       <div className="date-input-group">
                         <label>Начало</label>
-                        <input
-                          type="date"
-                          className="date-input-large"
-                          value={vacationForm.start_date}
-                          onChange={(e) => setVacationForm({...vacationForm, start_date: e.target.value})}
+                        <DatePicker
+                          selected={vacationForm.start_date ? new Date(vacationForm.start_date) : null}
+                          onChange={(date) => setVacationForm({...vacationForm, start_date: date ? date.toISOString().split('T')[0] : ''})}
+                          dateFormat="dd.MM.yyyy"
+                          placeholderText="Выберите дату начала"
+                          className="date-input-large date-picker-input"
+                          calendarClassName="custom-calendar"
+                          locale="ru"
+                          showMonthDropdown
+                          showYearDropdown
+                          dropdownMode="scroll"
+                          minDate={new Date(new Date().getFullYear() - 2, 0, 1)}
+                          maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                          yearDropdownItemNumber={8}
                           required
                         />
                       </div>
@@ -1505,12 +1529,20 @@ function HolidaysManagerPage() {
                       
                       <div className="date-input-group">
                         <label>Конец</label>
-                        <input
-                          type="date"
-                          className="date-input-large"
-                          value={vacationForm.end_date}
-                          onChange={(e) => setVacationForm({...vacationForm, end_date: e.target.value})}
-                          min={vacationForm.start_date}
+                        <DatePicker
+                          selected={vacationForm.end_date ? new Date(vacationForm.end_date) : null}
+                          onChange={(date) => setVacationForm({...vacationForm, end_date: date ? date.toISOString().split('T')[0] : ''})}
+                          dateFormat="dd.MM.yyyy"
+                          placeholderText="Выберите дату окончания"
+                          className="date-input-large date-picker-input"
+                          calendarClassName="custom-calendar"
+                          locale="ru"
+                          showMonthDropdown
+                          showYearDropdown
+                          dropdownMode="scroll"
+                          minDate={vacationForm.start_date ? new Date(vacationForm.start_date) : new Date(new Date().getFullYear() - 2, 0, 1)}
+                          maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                          yearDropdownItemNumber={8}
                           required
                         />
                       </div>

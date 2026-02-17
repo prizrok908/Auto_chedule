@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import ru from 'date-fns/locale/ru';
+import 'react-datepicker/dist/react-datepicker.css';
 import '../pages/HolidaysManagement.css';
+import '../pages/ScheduleGenerator.css';
+
+registerLocale('ru', ru);
 
 function HolidaysManager() {
   const [holidays, setHolidays] = useState([]);
@@ -175,11 +181,20 @@ function HolidaysManager() {
                 <div className="date-inputs-row">
                   <div className="date-input-group">
                     <label>Начало</label>
-                    <input
-                      type="date"
-                      className="date-input-large"
-                      value={form.start_date}
-                      onChange={(e) => setForm({...form, start_date: e.target.value})}
+                    <DatePicker
+                      selected={form.start_date ? new Date(form.start_date) : null}
+                      onChange={(date) => setForm({...form, start_date: date ? date.toISOString().split('T')[0] : ''})}
+                      dateFormat="dd.MM.yyyy"
+                      placeholderText="Выберите дату начала"
+                      className="date-input-large date-picker-input"
+                      calendarClassName="custom-calendar"
+                      locale="ru"
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="scroll"
+                      minDate={new Date(new Date().getFullYear() - 2, 0, 1)}
+                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                      yearDropdownItemNumber={8}
                       required
                     />
                   </div>
@@ -188,12 +203,20 @@ function HolidaysManager() {
                   
                   <div className="date-input-group">
                     <label>Конец (если несколько дней)</label>
-                    <input
-                      type="date"
-                      className="date-input-large"
-                      value={form.end_date}
-                      onChange={(e) => setForm({...form, end_date: e.target.value})}
-                      min={form.start_date}
+                    <DatePicker
+                      selected={form.end_date ? new Date(form.end_date) : null}
+                      onChange={(date) => setForm({...form, end_date: date ? date.toISOString().split('T')[0] : ''})}
+                      dateFormat="dd.MM.yyyy"
+                      placeholderText="Оставьте пустым для одного дня"
+                      className="date-input-large date-picker-input"
+                      calendarClassName="custom-calendar"
+                      locale="ru"
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="scroll"
+                      minDate={form.start_date ? new Date(form.start_date) : new Date(new Date().getFullYear() - 2, 0, 1)}
+                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                      yearDropdownItemNumber={8}
                     />
                   </div>
                 </div>
@@ -222,11 +245,20 @@ function HolidaysManager() {
                   <div className="transfer-dates-row">
                     <div className="transfer-date-group">
                       <label>Какой день делаем выходным</label>
-                      <input
-                        type="date"
-                        className="date-input-large"
-                        value={form.transferred_from_date}
-                        onChange={(e) => setForm({...form, transferred_from_date: e.target.value})}
+                      <DatePicker
+                        selected={form.transferred_from_date ? new Date(form.transferred_from_date) : null}
+                        onChange={(date) => setForm({...form, transferred_from_date: date ? date.toISOString().split('T')[0] : ''})}
+                        dateFormat="dd.MM.yyyy"
+                        placeholderText="Обычно понедельник"
+                        className="date-input-large date-picker-input"
+                        calendarClassName="custom-calendar"
+                        locale="ru"
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="scroll"
+                        minDate={new Date(new Date().getFullYear() - 2, 0, 1)}
+                        maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                        yearDropdownItemNumber={8}
                       />
                       <span className="help-text-small">Обычно понедельник</span>
                     </div>
@@ -235,11 +267,20 @@ function HolidaysManager() {
                     
                     <div className="transfer-date-group">
                       <label>Какая суббота станет рабочей</label>
-                      <input
-                        type="date"
-                        className="date-input-large"
-                        value={form.working_saturday_date}
-                        onChange={(e) => setForm({...form, working_saturday_date: e.target.value})}
+                      <DatePicker
+                        selected={form.working_saturday_date ? new Date(form.working_saturday_date) : null}
+                        onChange={(date) => setForm({...form, working_saturday_date: date ? date.toISOString().split('T')[0] : ''})}
+                        dateFormat="dd.MM.yyyy"
+                        placeholderText="Суббота с уроками"
+                        className="date-input-large date-picker-input"
+                        calendarClassName="custom-calendar"
+                        locale="ru"
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="scroll"
+                        minDate={new Date(new Date().getFullYear() - 2, 0, 1)}
+                        maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                        yearDropdownItemNumber={8}
                       />
                       <span className="help-text-small">Суббота с уроками</span>
                     </div>

@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import ru from 'date-fns/locale/ru';
+import 'react-datepicker/dist/react-datepicker.css';
 import './Dashboard.css';
+import './ScheduleGenerator.css';
+
+registerLocale('ru', ru);
 
 function TeacherDashboard() {
   const { logout } = useAuth();
@@ -273,10 +279,20 @@ function LessonPlans() {
                 onChange={(e) => setFormData({...formData, homework: e.target.value})}
               />
 
-              <input
-                type="date"
-                value={formData.lesson_date}
-                onChange={(e) => setFormData({...formData, lesson_date: e.target.value})}
+              <DatePicker
+                selected={formData.lesson_date ? new Date(formData.lesson_date) : null}
+                onChange={(date) => setFormData({...formData, lesson_date: date ? date.toISOString().split('T')[0] : ''})}
+                dateFormat="dd.MM.yyyy"
+                placeholderText="Выберите дату урока"
+                className="input-big date-picker-input"
+                calendarClassName="custom-calendar"
+                locale="ru"
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="scroll"
+                minDate={new Date(new Date().getFullYear() - 2, 0, 1)}
+                maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                yearDropdownItemNumber={8}
               />
 
               <div className="form-buttons">
