@@ -1049,3 +1049,271 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #2c3e50;
   font-size: 18px;
 }
+
+
+/* Руководство на главной странице */
+.guide-section {
+  margin-top: 40px;
+}
+
+.guide-section h2 {
+  color: #2c3e50;
+  font-size: 28px;
+  margin-bottom: 25px;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 10px;
+}
+
+.guide-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+}
+
+.guide-step {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border-left: 5px solid #3498db;
+  transition: all 0.3s;
+}
+
+.guide-step:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+}
+
+.guide-step:last-child {
+  margin-bottom: 0;
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+.step-content h3 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 20px;
+}
+
+.step-content p {
+  margin: 0 0 10px 0;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.step-content ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #666;
+}
+
+.step-content li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.step-content strong {
+  color: #2c3e50;
+}
+
+/* Карта системы */
+.guide-map {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+}
+
+.guide-map h2 {
+  color: #2c3e50;
+  font-size: 28px;
+  margin-bottom: 25px;
+  border-bottom: 3px solid #27ae60;
+  padding-bottom: 10px;
+}
+
+.map-section {
+  margin-bottom: 30px;
+}
+
+.map-section:last-child {
+  margin-bottom: 0;
+}
+
+.map-section h3 {
+  color: #2c3e50;
+  font-size: 22px;
+  margin-bottom: 15px;
+  padding-left: 10px;
+  border-left: 4px solid #3498db;
+}
+
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.map-item {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s;
+}
+
+.map-item:hover {
+  border-color: #3498db;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+}
+
+.map-item strong {
+  display: block;
+  color: #2c3e50;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #3498db;
+}
+
+.map-item ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.map-item li {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 6px;
+  padding-left: 15px;
+  position: relative;
+}
+
+.map-item li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #3498db;
+  font-weight: bold;
+}
+
+/* Советы */
+.guide-tips {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.guide-tips h2 {
+  color: #2c3e50;
+  font-size: 28px;
+  margin-bottom: 25px;
+  border-bottom: 3px solid #f39c12;
+  padding-bottom: 10px;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.tip-card {
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+}
+
+.tip-card h4 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+}
+
+.tip-card ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.tip-card li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.tip-success {
+  background: #d4edda;
+  border-color: #28a745;
+}
+
+.tip-success h4 {
+  color: #155724;
+}
+
+.tip-success li {
+  color: #155724;
+}
+
+.tip-info {
+  background: #d1ecf1;
+  border-color: #17a2b8;
+}
+
+.tip-info h4 {
+  color: #0c5460;
+}
+
+.tip-info li {
+  color: #0c5460;
+}
+
+.tip-warning {
+  background: #fff3cd;
+  border-color: #ffc107;
+}
+
+.tip-warning h4 {
+  color: #856404;
+}
+
+.tip-warning li {
+  color: #856404;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .guide-step {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .map-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+}
